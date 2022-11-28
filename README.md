@@ -12,8 +12,8 @@ Sandbox for learning [Vite + react-ts](https://vitejs.dev) using [PokéAPI](http
 ## Nice to have
 
 - [ ] Custom CSS instead of Bootstrap so I actually learn CSS
-- [ ] GitHub Actions
-- [ ] Might be able to host it on GitHub pages, would be cool
+- [x] GitHub Actions
+- [x] Might be able to host it on GitHub pages, would be cool
 
 ## Ideas
 
