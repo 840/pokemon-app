@@ -10,7 +10,7 @@ function PokemonNavbar(): ReactElement {
                     <Navbar.Brand>
                         <img
                             alt=""
-                            src="/pokeball.svg"
+                            src="pokeball.svg"
                             width="30"
                             height="30"
                             className="d-inline-block align-top"
