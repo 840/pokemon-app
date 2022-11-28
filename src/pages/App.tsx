@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
-import './index.css'
+import './App.css'
 import { Routes, Route } from 'react-router-dom'
 import Home from './home'
 import { ReactElement } from 'react'
