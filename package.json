@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "CHOKIDAR_USEPOLLING=true vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build --base=/pokemon-app/",
     "preview": "vite preview"
   },
   "dependencies": {
