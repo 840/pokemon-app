@@ -9,7 +9,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@types/react-router-dom": "^5.3.3",
     "bootstrap": "^5.2.3",
     "react": "^18.2.0",
     "react-bootstrap": "^2.6.0",
@@ -17,8 +16,11 @@
     "react-router-dom": "^6.4.3"
   },
   "devDependencies": {
+    "@types/bootstrap": "^5.2.6",
     "@types/react": "^18.0.24",
+    "@types/react-bootstrap": "^0.32.32",
     "@types/react-dom": "^18.0.8",
+    "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^2.2.0",
     "typescript": "^4.6.4",
     "vite": "^3.2.3"

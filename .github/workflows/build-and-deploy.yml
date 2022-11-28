@@ -40,31 +40,33 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build --if-present
-    - run: npm test
+#   - run: npm test
     
     - uses: actions/upload-artifact@master
       with:
         name: dist
-        path: ./dist
+        path: |
+          dist
+          dist/*
 
   deploy:
     needs: build
     environment:
-      name: github-pages
+      name: pokemon-app
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@master
         with:
           name: dist
-          path: ./dist
+          path: '.'
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload entire repository
-          path: './dist'
+          path: '.'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
