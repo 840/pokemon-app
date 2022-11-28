@@ -8,7 +8,7 @@ function PokemonSearch() {
     const [state, setState] = useState({
         search: '',
         searching: false,
-        typingTimeout: 0,
+        typingTimeout: setTimeout(() => {}),
         pokemon: {}
     })
 
