@@ -1,14 +1,14 @@
 import InputGroup from 'react-bootstrap/InputGroup'
 import Spinner from 'react-bootstrap/Spinner'
 import Form from 'react-bootstrap/Form'
-import { useState } from 'react'
-import PokemonEntry from './PokemonEntry'
+import { useState, ReactElement } from 'react'
+import PokemonSearchResult from './PokemonSearchResult'
 
-function PokemonSearch() {
+function PokemonSearch(): ReactElement {
     const [state, setState] = useState({
         search: '',
         searching: false,
-        typingTimeout: setTimeout(() => {}),
+        typingTimeout: setTimeout(() => { }),
         pokemon: {}
     })
 
@@ -18,6 +18,10 @@ function PokemonSearch() {
 
         if (state.typingTimeout) {
             clearTimeout(state.typingTimeout)
+        }
+
+        if (value.length === 0) {
+            return
         }
 
         setState({
@@ -31,9 +35,9 @@ function PokemonSearch() {
                             case 200:
                                 return data.json()
                             case 404:
-                                return {'status': 'Not found'}
+                                return { 'status': 'Not found' }
                         }
-                        return {'status': 'Something went wrong!'}
+                        return { 'status': 'Something went wrong!' }
                     })
                     .then((data) => {
                         setState({
@@ -48,7 +52,7 @@ function PokemonSearch() {
     }
 
     const spinner = <Spinner animation='border' />
-    const pokemonEntry = <PokemonEntry pokemon={state.pokemon} />
+    const pokemonEntry = <PokemonSearchResult pokemon={state.pokemon} />
 
     return (
         <>

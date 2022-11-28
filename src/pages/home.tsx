@@ -1,13 +1,16 @@
+import { ReactElement } from "react"
+import { Container } from "react-bootstrap"
 import PokemonSearch from "../components/PokemonSearch"
 
-function Home() { 
+function Home(): ReactElement {
     return (
         <div>
-            <h1>Pokédex</h1>
-            <PokemonSearch />
+            <Container className="p-5">
+                <PokemonSearch />
+            </Container>
         </div>
 
     )
-  }
-  
+}
+
 export default Home
