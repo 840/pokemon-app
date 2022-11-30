@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import PokemonNavbar from './components/PokemonNavbar'
 import App from './pages/App'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
-import Logo from './assets/pokeball.svg'
+import Logo from './../assets/pokeball.svg'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>

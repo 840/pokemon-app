@@ -1,11 +1,13 @@
-import { ReactElement, useEffect } from 'react'
+import { ReactElement } from 'react'
 import { Button, Card, Row } from 'react-bootstrap'
 import 'animate.css';
 import { Link } from 'react-router-dom'
-
-
-function PokemonSearchResult({ pokemon, searchPokemonApi }: any): ReactElement {    
-    if (Object.keys(pokemon).length === 0) return <div />
+    
+// Will type this response in the future
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function PokemonSearchResult({ pokemon, searchPokemonApi }: any): ReactElement {
+    if (pokemon.error) return <div>{ pokemon.error }</div>
+    if (Object.keys(pokemon).length === 0 || pokemon.name === undefined) return <div />
     const pokemonName = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)
     
     const nextPokemon = () => {

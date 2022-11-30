@@ -1,6 +1,6 @@
 import { ReactElement } from 'react'
 import { Container, Navbar } from 'react-bootstrap'
-import Logo from './../assets/pokeball.svg'
+import Logo from './../../assets/pokeball.svg'
 
 function PokemonNavbar(): ReactElement {
     return (

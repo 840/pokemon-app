@@ -7,11 +7,13 @@ import PokemonSearchResult from './PokemonSearchResult'
 function PokemonSearch(): ReactElement {
     const [state, setState] = useState({
         searching: false,
-        typingTimeout: setTimeout(() => { }),
+        typingTimeout: setTimeout(() => { return }),
         pokemon: {},
         pokemonLocation: {}
     })
 
+    // Will type this response in the future
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleChange = async (data: any) => {
         const name = data.target.name
         const value = data.target.type === 'checkbox' ? data.target.checked : data.target.value
@@ -34,25 +36,28 @@ function PokemonSearch(): ReactElement {
 
     const searchPokemonApi = async (pokemonId: string | number): Promise<void> => {
         if (typeof pokemonId === 'string')
-            pokemonId = pokemonId.toLowerCase()    
+            pokemonId = pokemonId.toLowerCase()
 
         fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`)
-        .then((data): Object => {
-            switch (data.status) {
-                case 200:
-                    return data.json()
-                case 404:
-                    return { 'status': 'Not found' }
-            }
-            return { 'status': 'Something went wrong!' }
-        })
-        .then((data) => {
-            setState({
-                ...state,
-                searching: false,
-                pokemon: data
+            // Will type this response in the future
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            .then((data): Promise<any> => {
+                switch (data.status) {
+                    case 200:
+                        return data.json()
+                    case 404:
+                        return new Promise((resolve) => resolve({ 'error': `Could not find ${pokemonId}` }))
+                    default:
+                        return new Promise((resolve) => resolve({ 'error': 'Something went wrong!' }))
+                }
             })
-        })
+            .then((data) => {
+                setState({
+                    ...state,
+                    searching: false,
+                    pokemon: data
+                })
+            })
     }
 
     const spinner = <Spinner animation='border' />
