@@ -1,13 +1,19 @@
-import { ReactElement } from 'react'
-import { Button, Card, Image, Row } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { ReactElement, useEffect } from 'react'
+import { Button, Card, Row } from 'react-bootstrap'
 import 'animate.css';
+import { Link } from 'react-router-dom'
 
 
-function PokemonSearchResult({ pokemon }: any): ReactElement {    
+function PokemonSearchResult({ pokemon, searchPokemonApi }: any): ReactElement {    
     if (Object.keys(pokemon).length === 0) return <div />
-
     const pokemonName = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)
+    
+    const nextPokemon = () => {
+        searchPokemonApi(pokemon.id + 1)
+    }
+    const prevPokemon = () => {
+        searchPokemonApi(pokemon.id - 1)
+    }
 
     return (
         <Row>
@@ -20,15 +26,11 @@ function PokemonSearchResult({ pokemon }: any): ReactElement {
                         <Card.Text></Card.Text>
                     </Card.Body>
                     <Row className='pb-3'>
-                        <Link className='col-md-4' to={`/search/${pokemon.id - 1}`}>
-                            <Button>&laquo;</Button>
-                        </Link>  
-                        <Link className='col-md-4' to={`/pokemon/${pokemon.name}`}>
+                        <Button className='col-md-1 offset-md-2' onClick={prevPokemon}>&laquo;</Button>  
+                        <Link className='col-md-4 offset-md-1' to={`/pokemon/${pokemon.name}`}>
                             <Button>More details</Button>
-                        </Link>  
-                        <Link className='col-md-4' to={`/search/${pokemon.id + 1}`}>
-                            <Button>&raquo;</Button>
-                        </Link>  
+                        </Link>
+                        <Button className='col-md-1 offset-md-1' onClick={nextPokemon}>&raquo;</Button>
                     </Row>
                 </Card>
             </div>

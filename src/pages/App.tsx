@@ -9,7 +9,6 @@ function App(): ReactElement {
     return (
         <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/search/:name' element={<Home />} />
             <Route path='/pokemon/:name' element={<Pokemon />} />
         </Routes>
     )
