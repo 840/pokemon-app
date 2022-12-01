@@ -19,4 +19,4 @@ Sandbox for learning [Vite + react-ts](https://vitejs.dev) using [PokéAPI](http
 
 ## Ideas
 
-- [ ] Who's that Pokemon page, grey out images and let user guess
+- [x] Who's that Pokemon page, grey out images and let user guess
