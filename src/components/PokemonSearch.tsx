@@ -3,6 +3,7 @@ import Spinner from 'react-bootstrap/Spinner'
 import Form from 'react-bootstrap/Form'
 import { useState, ReactElement } from 'react'
 import PokemonSearchResult from './PokemonSearchResult'
+import { getPokemonByNameOrId } from '../lib/PokemonApi'
 
 function PokemonSearch(): ReactElement {
     const [state, setState] = useState({
@@ -12,10 +13,10 @@ function PokemonSearch(): ReactElement {
         pokemonLocation: {}
     })
 
+
     // Will type this response in the future
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const handleChange = async (data: any) => {
-        const name = data.target.name
+    const handleSearch = async (data: any) => {
         const value = data.target.type === 'checkbox' ? data.target.checked : data.target.value
 
         if (state.typingTimeout) {
@@ -26,42 +27,29 @@ function PokemonSearch(): ReactElement {
             return
         }
 
+        handleChange(value)
+    }
+
+    // Will type this response in the future
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const handleChange = async (pokemonId: string | number) => {
         setState({
             ...state,
-            [name]: value,
             searching: true,
-            typingTimeout: setTimeout(() => searchPokemonApi(value), 1000)
+            typingTimeout: setTimeout(() => getPokemonByNameOrId(pokemonId)
+                .then((data) => {
+                    setState({
+                        ...state,
+                        searching: false,
+                        pokemon: data
+                    })
+                }), 500)
         })
     }
 
-    const searchPokemonApi = async (pokemonId: string | number): Promise<void> => {
-        if (typeof pokemonId === 'string')
-            pokemonId = pokemonId.toLowerCase()
-
-        fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`)
-            // Will type this response in the future
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            .then((data): Promise<any> => {
-                switch (data.status) {
-                    case 200:
-                        return data.json()
-                    case 404:
-                        return new Promise((resolve) => resolve({ 'error': `Could not find ${pokemonId}` }))
-                    default:
-                        return new Promise((resolve) => resolve({ 'error': 'Something went wrong!' }))
-                }
-            })
-            .then((data) => {
-                setState({
-                    ...state,
-                    searching: false,
-                    pokemon: data
-                })
-            })
-    }
 
     const spinner = <Spinner animation='border' />
-    const pokemonEntry = <PokemonSearchResult pokemon={state.pokemon} searchPokemonApi={searchPokemonApi} />
+    const pokemonResult = <PokemonSearchResult pokemon={state.pokemon} cardHandleChange={handleChange} />
 
     return (
         <>
@@ -71,10 +59,10 @@ function PokemonSearch(): ReactElement {
                     type='text'
                     placeholder='Pokemon name'
                     aria-label="Pokemon's name"
-                    onChange={handleChange}
+                    onChange={handleSearch}
                 />
             </InputGroup>
-            {state.searching ? spinner : pokemonEntry}
+            {state.searching ? spinner : pokemonResult}
         </>
     )
 }
