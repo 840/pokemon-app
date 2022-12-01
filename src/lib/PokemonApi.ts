@@ -6,11 +6,11 @@ export async function getPokemonByNameOrId(pokemonId: string | number): Promise<
 
     switch (response.status) {
         case 200:
-            return new Promise((resolve) => resolve(response.json()))
+            return await response.json()
         case 404:
-            return new Promise((resolve) => resolve({ 'error': `Could not find ${pokemonId}` }))
+            return await { 'error': `Could not find ${pokemonId}` }
         default:
-            return new Promise((resolve) => resolve({ 'error': 'Something went wrong!' }))
+            return await { 'error': 'Something went wrong!' }
     }
 }
 
