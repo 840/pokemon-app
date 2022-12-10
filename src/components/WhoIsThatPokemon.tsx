@@ -1,6 +1,8 @@
 import { useState, ReactElement, useEffect, useRef } from 'react'
 import { Row, Card, Button, ButtonGroup, Spinner } from 'react-bootstrap'
 import { getListOfPokemon, getPokemonByNameOrId } from '../lib/PokemonApi'
+import { WhoIsThatPokemonState } from '../types'
+import { isPokemon } from '../utils'
 
 const MAX_POKEMON_ID = 899
 const QUIZ_AMOUNT = 10
@@ -15,7 +17,7 @@ function WhoIsThatPokemon(): ReactElement {
         incorrectPokemon: <></>
     })
 
-    const setState = (data: any) => {
+    const setState = (data: WhoIsThatPokemonState) => {
         stateRef.current = data,
         _setState(data)
     }
@@ -30,7 +32,6 @@ function WhoIsThatPokemon(): ReactElement {
         const response = await getListOfPokemon(MAX_POKEMON_ID)
         const incorrectPokemon = response.results.sort(() => .5 - Math.random()).slice(0, 4)
         const correctPokemon = await getPokemonByNameOrId(incorrectPokemon[Math.floor(Math.random() * 4)]['name'])
-
         
         const answers = <>
             <ButtonGroup>
@@ -43,13 +44,15 @@ function WhoIsThatPokemon(): ReactElement {
             </ButtonGroup>
         </>
 
-        setState({
-            ...state,
-            incorrectPokemon: answers,
-            correctPokemonName: correctPokemon.name,
-            correctPokemonImage: correctPokemon.sprites.other['official-artwork'].front_default
-        })
-
+        
+        if (isPokemon(correctPokemon)) {
+            setState({
+                ...state,
+                incorrectPokemon: answers,
+                correctPokemonName: correctPokemon.name,
+                correctPokemonImage: correctPokemon.sprites.other['official-artwork']?.front_default
+            })
+        }
     }
 
     const submitAnswer = (pokemonName: string) => {

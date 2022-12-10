@@ -9,7 +9,7 @@ Sandbox for learning [Vite + react-ts](https://vitejs.dev) using [PokéAPI](http
 - [ ] Improve search home page
 - [ ] Page per Pokémon
 - [ ] Toggle for shinies, multi-select for generations
-- [ ] Type responses
+- [x] Type responses
 
 ## Nice to have
 

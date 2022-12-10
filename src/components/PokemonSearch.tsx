@@ -4,49 +4,47 @@ import Form from 'react-bootstrap/Form'
 import { useState, ReactElement } from 'react'
 import PokemonSearchResult from './PokemonSearchResult'
 import { getPokemonByNameOrId } from '../lib/PokemonApi'
+import { ErrorMessage } from './../types'
+import { Pokemon } from './../lib/PokemonApi'
+
+type PokemonSearchType = {
+    searching: boolean,
+    typingTimeout: NodeJS.Timeout,
+    pokemon?: Pokemon | ErrorMessage
+}
 
 function PokemonSearch(): ReactElement {
     const [state, setState] = useState({
         searching: false,
         typingTimeout: setTimeout(() => { return }),
         pokemon: {},
-        pokemonLocation: {}
-    })
+    } as PokemonSearchType)
 
-
-    // Will type this response in the future
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const handleSearch = async (data: any) => {
+    const handleSearch = async (data: React.ChangeEvent<HTMLInputElement>) => {
         const value = data.target.type === 'checkbox' ? data.target.checked : data.target.value
 
-        if (state.typingTimeout) {
-            clearTimeout(state.typingTimeout)
+        if (state.typingTimeout) clearTimeout(state.typingTimeout)
+        if (typeof value === 'string' && value.length > 0) {
+            handleChange(value)
         }
 
-        if (value.length === 0) {
-            return
-        }
-
-        handleChange(value)
+        return
     }
 
-    // Will type this response in the future
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleChange = async (pokemonId: string | number) => {
         setState({
             ...state,
             searching: true,
             typingTimeout: setTimeout(() => getPokemonByNameOrId(pokemonId)
-                .then((data) => {
+                .then((pokemon) => {
                     setState({
                         ...state,
                         searching: false,
-                        pokemon: data
+                        pokemon
                     })
                 }), 500)
-        })
+            })
     }
-
 
     const spinner = <Spinner animation='border' />
     const pokemonResult = <PokemonSearchResult pokemon={state.pokemon} cardHandleChange={handleChange} />
