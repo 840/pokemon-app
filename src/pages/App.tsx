@@ -1,10 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
-import Home from './home'
+import Home from './Home'
 import { ReactElement } from 'react'
-import Pokemon from './pokemon'
-import Quiz from './quiz'
+import Pokemon from './Pokemon'
+import Quiz from './Quiz'
 
 function App(): ReactElement {
     return (
