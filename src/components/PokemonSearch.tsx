@@ -35,15 +35,15 @@ function PokemonSearch(): ReactElement {
         setState({
             ...state,
             searching: true,
-            typingTimeout: setTimeout(() => getPokemonByNameOrId(pokemonId)
-                .then((pokemon) => {
-                    setState({
-                        ...state,
-                        searching: false,
-                        pokemon
-                    })
-                }), 500)
-            })
+            typingTimeout: setTimeout(async () => {
+                const pokemon = await getPokemonByNameOrId(pokemonId)
+                setState({
+                    ...state,
+                    searching: false,
+                    pokemon
+                })
+            }, 500)
+        })
     }
 
     const spinner = <Spinner animation='border' />
