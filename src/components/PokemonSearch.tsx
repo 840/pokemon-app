@@ -4,21 +4,16 @@ import Form from 'react-bootstrap/Form'
 import { useState, ReactElement } from 'react'
 import PokemonSearchResult from './PokemonSearchResult'
 import { getPokemonByNameOrId } from '../lib/PokemonApi'
-import { ErrorMessage } from './../types'
-import { Pokemon } from './../lib/PokemonApi'
+import { PokemonSearchState } from './../types'
 
-type PokemonSearchType = {
-    searching: boolean,
-    typingTimeout: NodeJS.Timeout,
-    pokemon?: Pokemon | ErrorMessage
-}
+const SEARCH_DELAY_IN_MS = 500
 
 function PokemonSearch(): ReactElement {
     const [state, setState] = useState({
         searching: false,
         typingTimeout: setTimeout(() => { return }),
         pokemon: {},
-    } as PokemonSearchType)
+    } as PokemonSearchState)
 
     const handleSearch = async (data: React.ChangeEvent<HTMLInputElement>) => {
         const value = data.target.type === 'checkbox' ? data.target.checked : data.target.value
@@ -42,7 +37,7 @@ function PokemonSearch(): ReactElement {
                     searching: false,
                     pokemon
                 })
-            }, 500)
+            }, SEARCH_DELAY_IN_MS)
         })
     }
 

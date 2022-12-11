@@ -22,6 +22,12 @@ export type PokemonSearch = {
     cardHandleChange: (pokemonId: string | number) => Promise<void>
 }
 
+export type PokemonSearchState = {
+    searching: boolean,
+    typingTimeout: NodeJS.Timeout,
+    pokemon?: Pokemon | ErrorMessage
+}
+
 export type WhoIsThatPokemonState = {
     quizTotal: number,
     quizCurrent: number,

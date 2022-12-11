@@ -6,7 +6,6 @@ import { PokemonSearch } from './../types'
 import { isErrorMessage, isPokemon } from '../utils'
 import { Type } from '../lib/PokemonApi'
 
-
 function PokemonSearchResult({ pokemon, cardHandleChange }: PokemonSearch): ReactElement {
     if (isErrorMessage(pokemon) && pokemon.error) return <div>{pokemon.error}</div>
     if (isPokemon(pokemon) && (Object.keys(pokemon).length === 0 || pokemon.name === undefined)) return <div />
