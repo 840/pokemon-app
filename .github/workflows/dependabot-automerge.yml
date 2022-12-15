@@ -4,7 +4,7 @@ on:
   pull_request:
 
 jobs:
-  worker:
+  dependabot:
     runs-on: ubuntu-latest
 
     if: github.actor == 'dependabot[bot]'
@@ -25,3 +25,8 @@ jobs:
               pull_number: context.payload.pull_request.number
             })
           github-token: ${{github.token}}
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
